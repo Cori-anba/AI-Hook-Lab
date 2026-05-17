@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppSettings } from '@/lib/types';
 import { PRESET_PROVIDERS } from '@/lib/constants';
 
@@ -19,6 +19,16 @@ export default function SettingsModal({ open, settings, error, onSave, onClose }
   const [baseUrl, setBaseUrl] = useState(settings.baseUrl);
   const [model, setModel] = useState(settings.model);
   const [preset, setPreset] = useState('');
+
+  // 弹窗打开时同步 localStorage 中的最新值
+  useEffect(() => {
+    if (open) {
+      setApiKey(settings.apiKey);
+      setBaseUrl(settings.baseUrl);
+      setModel(settings.model);
+      setPreset('');
+    }
+  }, [open, settings.apiKey, settings.baseUrl, settings.model]);
 
   if (!open) return null;
 
