@@ -40,8 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .superpowers/
+.claude/
 
-# 截图/临时图片
-/*.jpg
-/*.png
-/*.webp
