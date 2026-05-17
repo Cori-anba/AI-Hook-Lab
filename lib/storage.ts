@@ -21,24 +21,14 @@ function safeSet(key: string, value: unknown): void {
   }
 }
 
-// ---- 设置（sessionStorage） ----
+// ---- 设置（localStorage，持久保留 API Key） ----
 
 export function getSettings(): AppSettings {
-  try {
-    const raw = sessionStorage.getItem(STORAGE_KEYS.SETTINGS);
-    if (!raw) return { ...DEFAULT_SETTINGS };
-    return JSON.parse(raw) as AppSettings;
-  } catch {
-    return { ...DEFAULT_SETTINGS };
-  }
+  return safeGet<AppSettings>(STORAGE_KEYS.SETTINGS, { ...DEFAULT_SETTINGS });
 }
 
 export function saveSettings(settings: AppSettings): void {
-  try {
-    sessionStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
-  } catch {
-    // 静默降级
-  }
+  safeSet(STORAGE_KEYS.SETTINGS, settings);
 }
 
 // ---- 收藏（localStorage） ----
