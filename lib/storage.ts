@@ -70,6 +70,12 @@ export function toggleFavorite(item: HookItem): boolean {
   }
 }
 
+export function removeFavorite(content: string): void {
+  const favorites = getFavorites();
+  const filtered = favorites.filter((f) => f.content !== content);
+  saveFavorites(filtered);
+}
+
 // ---- 历史记录（localStorage） ----
 
 const MAX_HISTORY = 50;
@@ -86,4 +92,10 @@ export function addHistory(group: HistoryGroup): void {
     history.splice(MAX_HISTORY);
   }
   safeSet(STORAGE_KEYS.HISTORY, history);
+}
+
+export function removeHistory(id: string): void {
+  const history = getHistory();
+  const filtered = history.filter((h) => h.id !== id);
+  safeSet(STORAGE_KEYS.HISTORY, filtered);
 }

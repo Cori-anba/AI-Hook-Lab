@@ -46,11 +46,11 @@ export const STORAGE_KEYS = {
 export const DEFAULT_SETTINGS = {
   apiKey: '',
   baseUrl: 'https://api.deepseek.com/v1',
-  model: 'deepseek-chat',
+  model: 'deepseek-v4-flash',
 } as const satisfies AppSettings;
 
 export const PRESET_PROVIDERS = [
-  { label: 'DeepSeek', baseUrl: 'https://api.deepseek.com/v1', model: 'deepseek-chat' },
+  { label: 'DeepSeek', baseUrl: 'https://api.deepseek.com/v1', model: 'deepseek-v4-flash' },
   { label: '智谱清言', baseUrl: 'https://open.bigmodel.cn/api/paas/v4', model: 'glm-4-flash' },
   { label: '通义千问', baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1', model: 'qwen-plus' },
   { label: 'OpenAI', baseUrl: 'https://api.openai.com/v1', model: 'gpt-4o' },

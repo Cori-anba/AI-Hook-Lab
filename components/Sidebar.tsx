@@ -12,9 +12,11 @@ interface SidebarProps {
   history: HistoryGroup[];
   onCopy: (content: string) => void;
   onViewHistory: (group: HistoryGroup) => void;
+  onDeleteFavorite: (content: string) => void;
+  onDeleteHistory: (id: string) => void;
 }
 
-export default function Sidebar({ favorites, history, onCopy, onViewHistory }: SidebarProps) {
+export default function Sidebar({ favorites, history, onCopy, onViewHistory, onDeleteFavorite, onDeleteHistory }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<'favorites' | 'history'>('favorites');
 
   return (
@@ -46,16 +48,16 @@ export default function Sidebar({ favorites, history, onCopy, onViewHistory }: S
       {/* 移动端面板 */}
       <div className="md:hidden mb-4">
         {activeTab === 'favorites' ? (
-          <FavoritesPanel favorites={favorites} onCopy={onCopy} />
+          <FavoritesPanel favorites={favorites} onCopy={onCopy} onDelete={onDeleteFavorite} />
         ) : (
-          <HistoryPanel history={history} onView={onViewHistory} />
+          <HistoryPanel history={history} onView={onViewHistory} onDelete={onDeleteHistory} />
         )}
       </div>
 
       {/* 桌面端竖列侧边栏 */}
       <aside className="hidden md:flex md:flex-col md:gap-3 md:w-48 md:flex-shrink-0">
-        <FavoritesPanel favorites={favorites} onCopy={onCopy} />
-        <HistoryPanel history={history} onView={onViewHistory} />
+        <FavoritesPanel favorites={favorites} onCopy={onCopy} onDelete={onDeleteFavorite} />
+        <HistoryPanel history={history} onView={onViewHistory} onDelete={onDeleteHistory} />
       </aside>
     </>
   );

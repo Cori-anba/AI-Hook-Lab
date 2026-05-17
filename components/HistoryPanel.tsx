@@ -17,9 +17,10 @@ const contentTypeLabels: Record<string, string> = {
 interface HistoryPanelProps {
   history: HistoryGroup[];
   onView: (group: HistoryGroup) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function HistoryPanel({ history, onView }: HistoryPanelProps) {
+export default function HistoryPanel({ history, onView, onDelete }: HistoryPanelProps) {
   return (
     <div className="bg-[#14141f] border border-white/[0.07] rounded-xl p-3">
       <h3 className="text-xs font-semibold text-zinc-300 mb-2 flex items-center gap-1.5">
@@ -37,10 +38,10 @@ export default function HistoryPanel({ history, onView }: HistoryPanelProps) {
             <button
               key={group.id}
               onClick={() => onView(group)}
-              className="w-full text-left bg-white/[0.02] border border-white/[0.04] rounded-lg p-2.5
+              className="relative w-full text-left bg-white/[0.02] border border-white/[0.04] rounded-lg p-2.5 group
                          hover:border-cyan-500/20 transition-all"
             >
-              <p className="text-xs text-zinc-400 truncate">{group.topic}</p>
+              <p className="text-xs text-zinc-400 truncate pr-5">{group.topic}</p>
               <div className="flex items-center gap-1 mt-1.5">
                 <span className="text-[10px] text-zinc-600">
                   {platformLabels[group.platform] || group.platform}
@@ -53,6 +54,13 @@ export default function HistoryPanel({ history, onView }: HistoryPanelProps) {
                   {new Date(group.generatedAt).toLocaleDateString('zh-CN')}
                 </span>
               </div>
+              <span
+                onClick={(e) => { e.stopPropagation(); onDelete(group.id); }}
+                className="absolute top-2 right-2 text-zinc-700 hover:text-red-400 transition-colors text-xs opacity-0 group-hover:opacity-100"
+                title="删除"
+              >
+                ✕
+              </span>
             </button>
           ))}
         </div>

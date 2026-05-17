@@ -60,6 +60,8 @@ export default function HomePage() {
             history={hookLab.history}
             onCopy={hookLab.copyHook}
             onViewHistory={hookLab.viewHistory}
+            onDeleteFavorite={hookLab.handleDeleteFavorite}
+            onDeleteHistory={hookLab.handleDeleteHistory}
           />
           <ResultsGrid
             hooks={hookLab.hooks}

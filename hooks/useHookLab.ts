@@ -5,7 +5,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { HookItem, HistoryGroup, AppSettings, ToastMessage } from '@/lib/types';
 import { DEFAULT_SETTINGS, type PlatformKey, type ContentTypeKey, type StyleKey } from '@/lib/constants';
-import { getSettings, saveSettings, getFavorites, toggleFavorite, getHistory, addHistory } from '@/lib/storage';
+import { getSettings, saveSettings, getFavorites, toggleFavorite, removeFavorite, getHistory, addHistory, removeHistory } from '@/lib/storage';
 
 let toastIdCounter = 0;
 
@@ -166,6 +166,20 @@ export function useHookLab() {
     showToast('已加载历史记录', 'info');
   }, [showToast]);
 
+  // 删除收藏
+  const handleDeleteFavorite = useCallback((content: string) => {
+    removeFavorite(content);
+    setFavorites(getFavorites());
+    showToast('已删除收藏', 'info');
+  }, [showToast]);
+
+  // 删除历史记录
+  const handleDeleteHistory = useCallback((id: string) => {
+    removeHistory(id);
+    setHistory(getHistory());
+    showToast('已删除记录', 'info');
+  }, [showToast]);
+
   return {
     // 输入
     topic, setTopic,
@@ -177,9 +191,10 @@ export function useHookLab() {
     // 设置
     settings, settingsOpen, setSettingsOpen, handleSaveSettings,
     // 收藏
-    favorites, handleToggleFavorite, isFavorite: (content: string) => favorites.some((f) => f.content === content),
+    favorites, handleToggleFavorite, handleDeleteFavorite,
+    isFavorite: (content: string) => favorites.some((f) => f.content === content),
     // 历史
-    history, viewHistory,
+    history, viewHistory, handleDeleteHistory,
     // Toast
     toasts, removeToast,
     // 操作

@@ -7,9 +7,10 @@ import { HookItem } from '@/lib/types';
 interface FavoritesPanelProps {
   favorites: HookItem[];
   onCopy: (content: string) => void;
+  onDelete: (content: string) => void;
 }
 
-export default function FavoritesPanel({ favorites, onCopy }: FavoritesPanelProps) {
+export default function FavoritesPanel({ favorites, onCopy, onDelete }: FavoritesPanelProps) {
   return (
     <div className="bg-[#14141f] border border-white/[0.07] rounded-xl p-3">
       <h3 className="text-xs font-semibold text-zinc-300 mb-2 flex items-center gap-1.5">
@@ -26,11 +27,11 @@ export default function FavoritesPanel({ favorites, onCopy }: FavoritesPanelProp
           {favorites.map((item) => (
             <div
               key={item.id}
-              className="bg-white/[0.02] border border-white/[0.04] rounded-lg p-2.5 group cursor-pointer
+              className="relative bg-white/[0.02] border border-white/[0.04] rounded-lg p-2.5 group cursor-pointer
                          hover:border-purple-500/20 transition-all"
               onClick={() => onCopy(item.content)}
             >
-              <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2">{item.content}</p>
+              <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2 pr-5">{item.content}</p>
               <div className="flex items-center gap-1 mt-1.5">
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400">
                   {item.style}
@@ -39,6 +40,13 @@ export default function FavoritesPanel({ favorites, onCopy }: FavoritesPanelProp
                   {item.score.toFixed(1)}
                 </span>
               </div>
+              <button
+                onClick={(e) => { e.stopPropagation(); onDelete(item.content); }}
+                className="absolute top-2 right-2 text-zinc-700 hover:text-red-400 transition-colors text-xs opacity-0 group-hover:opacity-100"
+                title="删除"
+              >
+                ✕
+              </button>
             </div>
           ))}
         </div>
